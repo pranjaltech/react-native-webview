@@ -191,6 +191,10 @@ public class RNCWebViewManager extends SimpleViewManager<WebView> {
       public void onDownloadStart(String url, String userAgent, String contentDisposition, String mimetype, long contentLength) {
         RNCWebViewModule module = getModule(reactContext);
 
+        if(url.startsWith("blob:")) {
+          url = url.substring(5);
+          System.out.println("Blob URL handled");
+        }
         DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
 
         String fileName = URLUtil.guessFileName(url, contentDisposition, mimetype);
